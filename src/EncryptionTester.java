@@ -1,4 +1,4 @@
-
+package lab12;
 public class EncryptionTester {
 	
 	public static void main(String[] args) throws Exception {
