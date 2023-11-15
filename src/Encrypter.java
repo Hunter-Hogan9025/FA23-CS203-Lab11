@@ -42,7 +42,7 @@ public class Encrypter {
     	String encrypt = "";
     	int c = 0;
     	for(int i = 0; i < d.length(); i++) {
-    		if((int) d.charAt(i) >= 65 || (int) d.charAt(i) <= 90 || (int) d.charAt(i) >= 97  || (int) d.charAt(i) <= 127)	{
+    		/*if((int) d.charAt(i) >= 65 || (int) d.charAt(i) <= 90 || (int) d.charAt(i) >= 97  || (int) d.charAt(i) <= 127)	{
     			c = (int)d.charAt(i) + shift;
     			encrypt = encrypt + (char)c;
     			if(c == 91) {
@@ -56,7 +56,8 @@ public class Encrypter {
     		else {
     			encrypt = encrypt + d.charAt(i);
     			
-    		}
+    		}*/
+    		encrypt = encrypt + shiftedLetter(d.charAt(i));
     	}
     	writeFile(encrypt, encryptedFilePath);
     }
@@ -74,7 +75,7 @@ public class Encrypter {
     	String decrypt = "";
     	int k = 0;
     	for(int i = 0; i < h.length(); i++) {
-    		if((int) h.charAt(i) >= 65 || (int) h.charAt(i) <= 90 || (int) h.charAt(i) >= 97  || (int) h.charAt(i) <= 127)	{
+    		/*if((int) h.charAt(i) >= 65 || (int) h.charAt(i) <= 90 || (int) h.charAt(i) >= 97  || (int) h.charAt(i) <= 127)	{
     			k = (int)h.charAt(i) - shift;
     			if(k == 64) {
     				k = 90;
@@ -86,7 +87,8 @@ public class Encrypter {
     		}
     		else {
     			decrypt = decrypt + h.charAt(i);
-    		}	
+    		}	*/
+    		decrypt = decrypt + shiftedLetter(h.charAt(i));	
     	}
     	
     	writeFile(decrypt, decryptedFilePath);
@@ -131,6 +133,27 @@ public class Encrypter {
     		System.out.println("Error: " + e.toString());
     	}
     }
+    
+    /**
+     * Shifts the letter by converting it into a number and shifting
+     * @param letter
+     * @return the shifted character
+     */
+    private char shiftedLetter(char letter) {	
+		int val = (int) letter;
+		//Check if letter is uppercase, lowercase, or not a letter
+		if(val <= 90 && val >= 65) { //uppercase
+			int shifted = val + shift;	
+			return shifted > 90 ? (char) (64 + shifted - 90) : (char) shifted;
+		}
+		else if(val <= 122 && val >= 97) { //lowercase
+			int shifted = val + shift;
+			return shifted > 122 ? (char) (96 + shifted - 122) : (char) shifted;
+		}
+		else 
+			return letter;
+    }
+    
 
     /**
      * Returns a string representation of the encrypted text.
